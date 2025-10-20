@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - ProviderVault</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(40, 40, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+        }
+
+        .back-btn {
+            background: #555555;
+            color: #ffffff;
+            border: 1px solid #666666;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #666666;
+        }
+
+        .settings-container {
+            background: rgba(40, 40, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .settings-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .setting-section {
+            margin-bottom: 35px;
+            padding-bottom: 35px;
+            border-bottom: 1px solid #555555;
+        }
+
+        .setting-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .setting-item {
+            margin-bottom: 20px;
+        }
+
+        .setting-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #cccccc;
+        }
+
+        .setting-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #555555;
+            border-radius: 8px;
+            font-size: 16px;
+            background: #333333;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .setting-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .setting-toggle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            display: none;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #555555;
+            transition: 0.4s;
+            border-radius: 30px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .success-message {
+            background: #2ed573;
+            color: #ffffff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo" onclick="window.location.href='/'">ProviderVault</div>
+            <a href="/" class="back-btn">← Back to Dashboard</a>
+        </header>
+
+        <div class="settings-container">
+            <h1 class="settings-title">Settings</h1>
+
+            <div class="success-message" id="successMessage">
+                Settings saved successfully!
+            </div>
+
+            <form id="settingsForm">
+                <div class="setting-section">
+                    <h2 class="section-title">Profile Settings</h2>
+
+                    <div class="setting-item">
+                        <label class="setting-label">Full Name</label>
+                        <input type="text" class="setting-input" value="Chen Chen" name="fullName">
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">Email Address</label>
+                        <input type="email" class="setting-input" value="chen.chen@example.com" name="email">
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">Phone Number</label>
+                        <input type="tel" class="setting-input" value="+1 (555) 123-4567" name="phone">
+                    </div>
+                </div>
+
+                <div class="setting-section">
+                    <h2 class="section-title">Notification Preferences</h2>
+
+                    <div class="setting-toggle">
+                        <span class="setting-label">Email Notifications</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked name="emailNotif">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-toggle">
+                        <span class="setting-label">Document Expiration Alerts</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked name="expirationAlerts">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="setting-toggle">
+                        <span class="setting-label">Weekly Summary Reports</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" name="weeklyReports">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-section">
+                    <h2 class="section-title">Security</h2>
+
+                    <div class="setting-item">
+                        <label class="setting-label">Current Password</label>
+                        <input type="password" class="setting-input" placeholder="Enter current password" name="currentPassword">
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="setting-label">New Password</label>
+                        <input type="password" class="setting-input" placeholder="Enter new password" name="newPassword">
+                    </div>
+
+                    <div class="setting-toggle">
+                        <span class="setting-label">Two-Factor Authentication</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" name="twoFactor">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Save Settings</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('settingsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.style.display = 'block';
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+
+            // Scroll to top to show message
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

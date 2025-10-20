@@ -2,6 +2,6 @@ bcrypt
 django
 dotenv
 pre-commit
-psycopg2
+psycopg2-binary
 requests
 selenium

@@ -450,11 +450,11 @@
             <!-- Sidebar -->
             <aside class="sidebar">
                 <nav>
-                    <a href="#" class="nav-item active">
+                    <a href="{% url 'main_page' %}" class="nav-item active">
                         <span class="nav-icon">📊</span>
                         Dashboard
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="{% url 'documents' %}" class="nav-item">
                         <span class="nav-icon">📄</span>
                         Documents
                     </a>
@@ -478,7 +478,7 @@
                         <span class="nav-icon">📊</span>
                         Reports
                     </a>
-                    <a href="#" class="nav-item">
+                    <a href="{% url 'settings' %}" class="nav-item">
                         <span class="nav-icon">⚙️</span>
                         Settings
                     </a>
@@ -616,21 +616,21 @@
                             </div>
 
                             <div class="quick-actions">
-                                <a href="#" class="quick-action-btn">
+                                <a href="{% url 'index' %}" class="quick-action-btn">
                                     <span>📄</span>
                                     Upload Document
                                 </a>
-                                <a href="#" class="quick-action-btn">
+                                <a href="{% url 'documents' %}" class="quick-action-btn">
                                     <span>🔍</span>
-                                    Verify Credential
+                                    View All Documents
                                 </a>
                                 <a href="#" class="quick-action-btn">
                                     <span>📊</span>
                                     Generate Report
                                 </a>
-                                <a href="#" class="quick-action-btn">
+                                <a href="{% url 'settings' %}" class="quick-action-btn">
                                     <span>👤</span>
-                                    Update Profile
+                                    Settings
                                 </a>
                             </div>
                         </div>
@@ -660,11 +660,15 @@
                 });
             });
 
-            // Navigation active state
+            // Navigation active state - allow navigation to occur
             const navItems = document.querySelectorAll('.nav-item');
             navItems.forEach(item => {
                 item.addEventListener('click', function(e) {
-                    e.preventDefault();
+                    // Only prevent default for placeholder links
+                    const href = this.getAttribute('href');
+                    if (href === '#') {
+                        e.preventDefault();
+                    }
                     navItems.forEach(nav => nav.classList.remove('active'));
                     this.classList.add('active');
                 });
@@ -676,20 +680,25 @@
                 alert('Opening notifications panel...');
             });
 
-            // Quick action buttons
+            // Quick action buttons - only prevent default for placeholder links
             const quickActionBtns = document.querySelectorAll('.quick-action-btn');
             quickActionBtns.forEach(btn => {
                 btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const action = this.textContent.trim();
-                    alert(`${action} functionality would open here...`);
+                    const href = this.getAttribute('href');
+                    // Only show alert for placeholder links (href="#")
+                    if (href === '#') {
+                        e.preventDefault();
+                        const action = this.textContent.trim();
+                        alert(`${action} functionality would open here...`);
+                    }
+                    // Otherwise, let the navigation happen naturally
                 });
             });
 
-            // Upload button
+            // Upload button - redirect to upload page
             const uploadBtn = document.querySelector('.btn-primary');
             uploadBtn.addEventListener('click', function() {
-                alert('Document upload modal would open here...');
+                window.location.href = "{% url 'index' %}";
             });
         });
     </script>

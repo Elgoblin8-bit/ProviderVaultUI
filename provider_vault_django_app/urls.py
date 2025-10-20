@@ -20,12 +20,17 @@ from .views import (
     auth,
     check_match,
     check_password,
+    documents_view,
+    download_document,
     home,
+    index,
     login,
     login_to_database,
     main_page,
     register,
     register_to_database,
+    settings_view,
+    upload_document,
 )
 
 urlpatterns = [
@@ -42,4 +47,10 @@ urlpatterns = [
     path(
         "check_password/", check_password, name="check_password"
     ),  # HTMX endpoint for password validation
+    # Document management URLs
+    path("index/", index, name="index"),
+    path("upload/", upload_document, name="upload_document"),
+    path("download/<str:filename>", download_document, name="download_document"),
+    path("settings/", settings_view, name="settings"),
+    path("documents/", documents_view, name="documents"),
 ]
