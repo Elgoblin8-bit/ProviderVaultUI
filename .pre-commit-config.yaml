@@ -23,10 +23,10 @@ repos:
     rev: 23.3.0
     hooks:
       - id: black
-        language_version: python3.13.1
+        language_version: python3.13
 -   repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
       - id: detect-secrets
 default_language_version:
-  python: python3.13.1
+  python: python3.13
